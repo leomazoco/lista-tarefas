@@ -7,6 +7,35 @@
   'wght' 400,
   'GRAD' 0,
   'opsz' 48
-
 }
+
+.alerta {
+    margin-bottom: 1rem;
+    height: 1.25rem;
+    display: grid;
+    align-items: center;
+    text-align: center;
+    font-size: 0.7rem;
+    border-radius: 0.25rem;
+    text-transform: capitalize;
+}
+
+.alerta-danger {
+    color: #721c24;
+    background: #f8d7da;
+}
+
+.alerta-success {
+    color: #155724;
+    background: #d4edda;
+}
+
+/*.container-tarefas{
+    margin-top: 2rem;
+    visibility: hidden;
+}
+
+.mostrar-container{
+    visibility: visible;
+}*/
 
