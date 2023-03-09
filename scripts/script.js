@@ -2,10 +2,10 @@
 const alert = document.querySelector('.alerta');
 const form = document.querySelector('.lista-form');
 const tarefa = document.getElementById('tarefas');
-const adicionar = document.querySelector('submit-btn');
-const container = document.querySelector('container-tarefas');
-const lista = document.querySelector('lista-tarefas');
-const limparBtn = document.querySelector('clear-btn');
+const adicionar = document.querySelector('.submit-btn');
+const container = document.querySelector('.container-tarefas');
+const lista = document.querySelector('.lista-tarefas');
+const limparBtn = document.querySelector('.clear-btn');
 
 //OPÇÃO EDITAR
 let editElement;
@@ -31,7 +31,19 @@ function addItem(e){
 
         //Texto ao article
 
-        element.innerHTML = ``
+        element.innerHTML = `<p class="title">${value}</p>
+            <div class="btn-container">
+                <button type="button" class="edit-btn">
+                    <i class="material-icons">edit_note</i>
+                </button>
+                <button type="button" class="delete-btn">
+                    <i class="material-icons">delete_outline</i>
+                </button>
+            </div>`;
+            //APPEND CHILD
+            lista.appendChild(element);
+            //DISPLAY ALERT
+            displayAlert('Item adicionado a lista', 'success')
     
     } else if(value && editFlag){
         console.log('editando')
