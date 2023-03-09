@@ -18,6 +18,8 @@ form.addEventListener('submit',addItem)
 //DELETAR ITENS
 limparBtn.addEventListener('click',limparLista)
 
+window.addEventListener('DOMContentLoaded', setupItems());
+
 //FUNÇÕES
 function addItem(e){
     e.preventDefault();
@@ -26,39 +28,15 @@ function addItem(e){
     const id = new Date().getTime().toString();
     
     if(value && !editFlag){
-        const element = document.createElement('article');
-        //add class
-        element.classList.add('tarefa-item');
-        //add ID
-        const attr = document.createAttribute('data-id');
-        attr.value = id;
-        element.setAttributeNode(attr);
-
-        //Texto ao article
-
-        element.innerHTML = `<p class="title">${value}</p>
-            <div class="btn-container">
-                <button type="button" class="edit-btn">
-                    <i class="material-icons">edit_note</i>
-                </button>
-                <button type="button" class="delete-btn">
-                    <i class="material-icons">delete_outline</i>
-                </button>
-            </div>`;
-            const deleteBtn = element.querySelector('.delete-btn');
-            const editBtn = element.querySelector('.edit-btn');
-            deleteBtn.addEventListener('click',apagarItem);
-            editBtn.addEventListener('click',editarItem);
-            //APPEND CHILD
-            lista.appendChild(element);
+        criarLista(id, value);
             //DISPLAY ALERT
-            displayAlert('Tarefa adicionada a lista', 'success');
-            container.classList.add('mostrar-container');
+        displayAlert('Tarefa adicionada a lista', 'success');
+        container.classList.add('mostrar-container');
 
             //ADICIONANDO AO LOCAL STORAGE
-            addToLocalStorage(id,value);
+        addToLocalStorage(id,value);
             //VOLTADO O PLACEHOLDER
-            setBackToDefault();
+        setBackToDefault();
     
     } else if(value && editFlag){
         editElement.innerHTML = value;
@@ -94,7 +72,7 @@ function limparLista(){
     container.classList.remove("mostrar-container");
     displayAlert('Tarefas apagadas', 'danger');
     setBackToDefault();
-    //localStorage.removeItem('lista');
+    localStorage.removeItem('lista');
 }
 
 //FUNÇÃO EDITAR
@@ -120,8 +98,7 @@ function apagarItem(e){
     displayAlert('Tarefa apagada', 'danger');
     setBackToDefault();
 
-    //APAGANDO DO BANCO DE DADOS
-    //removeFromLocalStorage(id);
+    removeFromLocalStorage(id);
 }
 
 //APAGANDO O PLACEHOLDER
@@ -134,10 +111,78 @@ function setBackToDefault(){
 
 //LOCAL STORAGE
 function addToLocalStorage(id, value){
-    console.log('adicionado ao banco de dados');
-}
+    const tarefa = {id,value};
+    let items = getLocalStorage();
+    console.log(items)
+    items.push(tarefa);
+    localStorage.setItem('lista', JSON.stringify(items));
+};
 
-function removeFromLocalStorage(id){}
-function editLocalStorage (id,value){};
+function removeFromLocalStorage(id){
+    let items = getLocalStorage();
+
+    items = items.filter(function(item){
+        if(item.id !== id){
+            return item
+        }
+    })
+    localStorage.setItem("lista", JSON.stringify(items));
+};
+
+function editLocalStorage (id,value){
+    let items = getLocalStorage();
+    items = items.map(function(item){
+        if(item.id === id) {
+            item.value = value;
+        }
+        return item;
+    });
+    localStorage.setItem("lista", JSON.stringify(items));
+};
+
+function getLocalStorage () {
+    return localStorage.getItem("lista")?JSON.parse(localStorage.getItem('lista')):[];
+};
+
+localStorage.setItem('orange', JSON.stringify(["item", "item2"]));
+const oranges = JSON.parse(localStorage.getItem('orange'));
+localStorage.removeItem("orange");
 
 //CONFIGURAÇÃO
+function setupItems(){
+    let items = getLocalStorage();
+    if (items.length > 0){
+        items.forEach(function(item){
+            criarLista(item.id, item.value)
+        })
+        container.classList.add('mostrar-container');
+    }
+}
+
+function criarLista(id, value) {
+    const element = document.createElement('article');
+        //add class
+        element.classList.add('tarefa-item');
+        //add ID
+        const attr = document.createAttribute('data-id');
+        attr.value = id;
+        element.setAttributeNode(attr);
+
+        //Texto ao article
+
+        element.innerHTML = `<p class="title">${value}</p>
+            <div class="btn-container">
+                <button type="button" class="edit-btn">
+                    <i class="material-icons">edit_note</i>
+                </button>
+                <button type="button" class="delete-btn">
+                    <i class="material-icons">delete_outline</i>
+                </button>
+            </div>`;
+            const deleteBtn = element.querySelector('.delete-btn');
+            const editBtn = element.querySelector('.edit-btn');
+            deleteBtn.addEventListener('click',apagarItem);
+            editBtn.addEventListener('click',editarItem);
+            //APPEND CHILD
+            lista.appendChild(element);
+}
