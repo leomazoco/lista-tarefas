@@ -43,7 +43,13 @@ function addItem(e){
             //APPEND CHILD
             lista.appendChild(element);
             //DISPLAY ALERT
-            displayAlert('Item adicionado a lista', 'success')
+            displayAlert('Item adicionado a lista', 'success');
+            container.classList.add('mostrar-container');
+
+            //ADICIONANDO AO LOCAL STORAGE
+            addToLocalStorage(id,value);
+            //VOLTADO O PLACEHOLDER
+            setBackToDefault();
     
     } else if(value && editFlag){
         console.log('editando')
@@ -64,6 +70,14 @@ function displayAlert(text,action){
     }, 1500)
 }
 
+//APAGANDO O PLACEHOLDER
+function setBackToDefault(){
+    
+}
+
 //LOCAL STORAGE
+function addToLocalStorage(id, value){
+    console.log('adicionado ao banco de dados');
+}
 
 //CONFIGURAÇÃO
