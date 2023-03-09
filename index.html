@@ -5,9 +5,41 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="estilos/style.css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
+      rel="stylesheet">
     <title>Lista de Tarefas</title>
 </head>
 <body>
-    
+    <section class ="section-centro">
+        <!--Formulario-->
+        <form class="lista-form">
+            <p class="alerta"></p>
+            <h3>Lista de Tarefas</h3>
+            <div class="controle-form">
+                <input type="text" id="tarefas" placeholder="adicione sua tarefa">
+                <button type="submit" class="submit-btn">Adicionar</button>
+            </div>
+        </form>
+        <!--Lista-->
+        <div class="container-tarefas">
+            <div class="lista-tarefas">
+                <article class="tarefa-item">
+                    <p class="title">Item</p>
+                    <div class="btn-container">
+                        <button type="button" class="edit-btn">
+                            <i class="material-icons">edit_note</i>
+                        </button>
+                        <button type="button" class="delete-btn">
+                            <i class="material-icons">delete_outline</i>
+                        </button>
+                    </div>
+                </article>
+            </div>
+            <!--botao-->
+            <button type="button" class="clear-btn">Limpar lista</button>
+        </div>
+    </section>
+    <!--JavaScript-->
+    <script src="scripts/script.js"></script>
 </body>
 </html>
